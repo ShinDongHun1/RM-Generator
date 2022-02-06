@@ -104,18 +104,15 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
 
         for (Class<?> bogProblemClass : reflections.getTypesAnnotatedWith(bojClass)) {//어노테이션이 붙은 클래스들 모두 가져오기 -> 문제들 다 가져옴
-
-
-            for (BOJ anno : bogProblemClass.getDeclaredAnnotationsByType(bojClass)) {//해당 클래스의 어노테이션 중 BOJ가 붙은 것들에 대한 정보를 가져옴
-                result.add(BOJProblem.builder()
-                                .gitRepoUrl(gitRepositoryUrlParser.getFullPath(bogProblemClass))
-                                .tier(anno.tier())
-                                .number(anno.number())
-                                .problemInfoUrl(BOJ_URL+anno.number())
-                                .solvedDate(LocalDate.of(anno.solveDate().year(), anno.solveDate().month(), anno.solveDate().day()))//풀이 시간은 현재 시간
-                                .name(BOJCrawler.getProblemName(anno.number()))
-                        .build());
-            }
+            BOJ anno = bogProblemClass.getDeclaredAnnotation(bojClass);
+            result.add(BOJProblem.builder()
+                    .gitRepoUrl(gitRepositoryUrlParser.getFullPath(bogProblemClass))
+                    .tier(anno.tier())
+                    .number(anno.number())
+                    .problemInfoUrl(BOJ_URL+anno.number())
+                    .solvedDate(LocalDate.of(anno.solveDate().year(), anno.solveDate().month(), anno.solveDate().day()))//풀이 시간은 현재 시간
+                    .name(BOJCrawler.getProblemName(anno.number()))
+                    .build());
         }
         return result;
     }
