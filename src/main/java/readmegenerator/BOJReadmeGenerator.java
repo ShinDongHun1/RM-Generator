@@ -2,6 +2,8 @@ package readmegenerator;
 
 
 import annotation.BOJ;
+import annotation.BaekjoonTier;
+import annotation.SolveDate;
 import crawling.BOJCrawler;
 import gitrepourlparser.GitRepositoryUrlParser;
 import org.reflections.Reflections;
@@ -108,7 +110,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
                                 .tier(anno.tier())
                                 .number(anno.number())
                                 .problemInfoUrl(BOJ_URL+anno.number())
-                                .solvedDate(LocalDate.now())//풀이 시간은 현재 시간
+                                .solvedDate(LocalDate.of(anno.solveDate().year(), anno.solveDate().month(), anno.solveDate().day()))//풀이 시간은 현재 시간
                                 .name(BOJCrawler.getProblemName(anno.number()))
                         .build());
             }

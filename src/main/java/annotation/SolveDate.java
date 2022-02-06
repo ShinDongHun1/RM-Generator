@@ -2,19 +2,19 @@ package annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.time.LocalDate;
 
-import static annotation.BaekjoonTier.UNDEFINED;
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target(TYPE)//클래스에 붙일 어노테이션
+@Target({TYPE, ANNOTATION_TYPE})//어노테이션에 붙는 어노테이션
 @Retention(RUNTIME)
-public @interface BOJ {
+public @interface SolveDate {
 
-    int number() default 0; //문제 번호
+    int year() default 2022;
+    int month() default 1;
+    int day() default 1;
 
-    BaekjoonTier tier() default UNDEFINED;//문제 단계
 
-    SolveDate solveDate();
 }
