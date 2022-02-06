@@ -5,7 +5,7 @@
 
 ### (적용 사진)
 
-![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_16.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/7c9b73d3684e7afda2059ec810954170b694b43e/image/img_16.png)
 
 <br/>
 
