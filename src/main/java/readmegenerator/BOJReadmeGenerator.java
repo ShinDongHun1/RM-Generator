@@ -2,6 +2,7 @@ package readmegenerator;
 
 
 import annotation.BOJ;
+import crawling.BOJCrawler;
 import gitrepourlparser.GitRepositoryUrlParser;
 import org.reflections.Reflections;
 import problem.BOJProblem;
@@ -27,10 +28,12 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
     private static final String TITLE_PREFIX = "## ";
 
+
     private String title = "백준";//README 파일 제목, 기본값은 백준
 
 
-    private static final String TABLE_HEAD = "|날짜|번호|제목|난이도|풀이|문제 주소|\n|---|---|---|---|---|\n";
+
+    private static final String TABLE_HEAD = "|날짜|번호|제목|난이도|풀이|문제 주소|\n|---|---|---|---|---|---|\n";
 
 
     private static final String BOJ_URL = "https://www.acmicpc.net/problem/";
@@ -41,6 +44,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
         this.gitRepositoryUrlParser = gitRepositoryUrlParser;
     }
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -105,7 +109,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
                                 .number(anno.number())
                                 .problemInfoUrl(BOJ_URL+anno.number())
                                 .solvedDate(LocalDate.now())//풀이 시간은 현재 시간
-                                .name("크롤링 쳐해라!")
+                                .name(BOJCrawler.getProblemName(anno.number()))
                         .build());
             }
         }
