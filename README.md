@@ -151,7 +151,7 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 <br/>
 <br/>
 
-### 2. 하루하나 알고리즘 Repo에 적용
+### 2. 하루하나 알고리즘 Repo에 적용 - AnAGitRepositoryUrlParser
 
 <br/>
 
