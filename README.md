@@ -4,7 +4,7 @@
 <br/>
 
 ### (적용 사진)
-![image-20220206225110452](.\image\img_16.png)
+![ㅇ](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_16.png)
 
 <br/>
 
