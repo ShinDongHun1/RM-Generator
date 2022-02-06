@@ -4,7 +4,7 @@
 <br/>
 
 ### (적용 사진)
-![ㅇ](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_16.png)
+![ㅇ](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_17.png)
 
 <br/>
 

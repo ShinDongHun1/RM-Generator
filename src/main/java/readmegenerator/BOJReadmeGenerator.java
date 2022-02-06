@@ -78,7 +78,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
                 //"|날짜|번호|제목|난이도|풀이|문제 주소|\n|---|---|---|---|---|\n";
                 stream.write(
                         MessageFormat.format("|{0}|" +
-                                                "{1}|" +
+                                                "{1,number,#}|" +
                                                 "{2}|" +
                                                 "<img src=\"{3}\" width=\"20\" height=\"20\" /> {4}|" +
                                                 "[풀이]({5})|" +
