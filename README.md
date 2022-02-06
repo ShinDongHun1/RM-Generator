@@ -1,6 +1,10 @@
 # 깃허브 ReadMe 자동 생성기
 
 <br/>
+<br/>
+
+### (적용 사진)
+![image-20220206225110452](.\image\img_16.png)
 
 <br/>
 
@@ -12,9 +16,10 @@
 
 <br/>
 
-아래 jar 파일을 다운로드 해 주세요
+아래 jar 파일을 다운로드 해주세요. (경로는 상관 없으나, 기억은 해주셔야 합니다.)
 
 **ReadMeGenerator-1.0-SNAPSHOT.jar**
+![image-20220206225110452](.\image\img_15.png)
 
 <br/>
 
@@ -24,7 +29,7 @@
 
 적용을 원하시는 프로젝트에 들어가서
 
-**File -> **
+**File ->** 
 
 **Project Structure ->**
 
