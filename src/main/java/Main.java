@@ -1,4 +1,5 @@
 import crawling.BOJCrawler;
+import gitrepourlparser.AbsolutePathBeforePackageNameParser;
 import gitrepourlparser.AnAGitRepositoryUrlParser;
 import gitrepourlparser.GitRepositoryUrlParser;
 import gitrepourlparser.PersonalGitRepositoryUrlParser;
@@ -10,7 +11,7 @@ public class Main {
 
 
         //== 개인 리포지토리에 리드미 만드는 코드 ==//
-        GitRepositoryUrlParser parser = new PersonalGitRepositoryUrlParser("ShinDongHun1","BOJ", "main" );
+        PersonalGitRepositoryUrlParser parser = new PersonalGitRepositoryUrlParser("ShinDongHun1","BOJ", "main" );
 
         BOJReadmeGenerator rg= new BOJReadmeGenerator(parser);
 
@@ -20,7 +21,8 @@ public class Main {
 
 
         //== 위에가 작동 안 할 때 - > 패키지 이름 전까지만 정해서 리드미 만드는 코드==//
-        GitRepositoryUrlParser abParser = new PersonalGitRepositoryUrlParser("ShinDongHun1","BOJ", "main" );
+        AbsolutePathBeforePackageNameParser abParser = new AbsolutePathBeforePackageNameParser();
+        abParser.setAbsolutePathBeforePackageName("https://github.com/ShinDongHun1/Algorithm/blob/main/BOJ/src");// 마지마 /를 넣어도 되고 빼도 되나 빼는게 이쁨 ^^
 
         rg= new BOJReadmeGenerator(abParser);
 
