@@ -77,7 +77,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
             for (BOJProblem problem : bojProblems) {
                 //"|날짜|번호|제목|난이도|풀이|문제 주소|\n|---|---|---|---|---|\n";
                 stream.write(
-                        MessageFormat.format("|{0}|{1}|{2}|{3}|[풀이]({4})|[문제 주소]{5}|",
+                        MessageFormat.format("|{0}|{1}|{2}|{3}|[풀이]({4})|[문제 주소]({5})|",
                                             problem.getSolvedDate(),
                                             problem.getNumber(),
                                             problem.getName(),
@@ -97,11 +97,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
         List<BOJProblem> result = new ArrayList<>();
 
 
-        System.out.println(reflections.getTypesAnnotatedWith(bojClass).size());
-
-
         for (Class<?> bogProblemClass : reflections.getTypesAnnotatedWith(bojClass)) {//어노테이션이 붙은 클래스들 모두 가져오기 -> 문제들 다 가져옴
-
 
 
             for (BOJ anno : bogProblemClass.getDeclaredAnnotationsByType(bojClass)) {//해당 클래스의 어노테이션 중 BOJ가 붙은 것들에 대한 정보를 가져옴
