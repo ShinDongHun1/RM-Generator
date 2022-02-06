@@ -19,7 +19,7 @@
 아래 jar 파일을 다운로드 해주세요. (경로는 상관 없으나, 기억은 해주셔야 합니다.)
 
 **ReadMeGenerator-1.0-SNAPSHOT.jar**
-![image-20220206225110452](.\image\img_15.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_15.png)
 
 <br/>
 
@@ -49,22 +49,22 @@
 
 <br/>
 
-![image-20220206225110452](.\image\img.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img.png)
 
 <br/><br/>
 
 
 
-![image-20220206225110452](.\image\img_1.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_1.png)
 (저는 ReadMeGenerator-1.0-SNAPSHOT.jar를 이미 추가를 해두었기 때문에 존재하는 모습이고, 지금 추가가 안되있어야 정상입니다.)
 
 <br/><br/>
 
-![image-20220206225110452](.\image\img_2.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_2.png)
 
 <br/><br/>
 
-![image-20220206225110452](.\image\img_3.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_3.png)
 
 <br/><br/><br/><br/>
 
@@ -78,7 +78,7 @@
 
 <br/>
 
-![image-20220206225110452](.\image\img_4.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_4.png)
 
 <br/>
 <br/>
@@ -101,7 +101,7 @@
 Username과, 레포지토리의 이름, 그리고 메인 브랜치의 이름을 아래와 같이 설정 후 실행해주시면 끝납니다.<br/>
 setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메서드입니다.
 
-![image-20220206225110452](.\image\img_5.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_5.png)
 
 
 
@@ -109,13 +109,13 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 
 그런데 해당 클래스는 아래와 같이 src등의 중간 다른 폴더가 있으면 적용되지 않습니다.<br/>
 
-![image-20220206225110452](.\image\img_6.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_6.png)
 
 <br/><br/>
 
 다음과 같은 구조에서만 적용됩니다. (흰색은 제 REPO가 아니라 가렸습니다.)<br/>
 
-![image-20220206225110452](.\image\img_7.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_7.png)
 
 
 
@@ -136,10 +136,10 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 
 <br/><br/>아래와 같이 package전까지의 주소를 복사한 후 setAbsolutePathBeforePackageName를 통해 설정해주시면 됩니다.<br/>
 
-![image-20220206225110452](.\image\img_8.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_8.png)
 <br/>
 <br/>
-![image-20220206225110452](.\image\img_9.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_9.png)
 
 
 
@@ -154,11 +154,11 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 
 하루하나 알고리즘에 적용할 때는 다음과 같은 형식으로 문제 코드를 저장해주셔야만 사용 가능합니다.<br/>
 
-![image-20220206225110452](.\image\img_10.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_10.png)
 
 <br/>위 사진과 같이, 하루하나 알고리즘 Repo에 들어오자마자 자신의 이름이 있는 폴더가 있어야 하며,<br/><br/>
 
-![image-20220206225110452](.\image\img_11.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_11.png)
 
 <br/>폴더에 들어갔을 때, 추가적인 폴더 없이 바로 문제 코드들이 나열되어 있어야 합니다.
 
@@ -166,13 +166,13 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 
 (추가적인 폴더가 있어도 아래와 같이 클래스 상단에 적혀있는 데로만 존재하며, 이외의 다른 폴더가 없는 경우라면 상관없습니다.)<br/>
 
-![image-20220206225110452](.\image\img_12.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_12.png)
 
 
 
 <br/><br/>사용 방법은 아래와 같습니다.<br/>
 
-![image-20220206225110452](.\image\img_13.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_13.png)
 
 <br/>setUsername 부분에는 자신의 폴더 이름을 입력해 주시면 됩니다.
 
@@ -182,4 +182,4 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 
 생성되는 README.md 파일은 다음과 같습니다.<br/>
 
-![image-20220206225110452](.\image\img_14.png)
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_14.png)
