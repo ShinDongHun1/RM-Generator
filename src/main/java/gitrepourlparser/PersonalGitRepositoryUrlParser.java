@@ -27,6 +27,7 @@ public class PersonalGitRepositoryUrlParser implements GitRepositoryUrlParser{
 
 
     public String getFullPath(final Class<?> clazz) {
+
         return MessageFormat.format("https://github.com/{0}/{1}/blob/{2}/{3}/{4}.java",
                 USERNAME,
                 REPOSITORY_NAME,

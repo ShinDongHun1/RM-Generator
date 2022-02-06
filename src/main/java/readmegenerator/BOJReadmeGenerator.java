@@ -77,10 +77,16 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
             for (BOJProblem problem : bojProblems) {
                 //"|날짜|번호|제목|난이도|풀이|문제 주소|\n|---|---|---|---|---|\n";
                 stream.write(
-                        MessageFormat.format("|{0}|{1}|{2}|{3}|[풀이]({4})|[문제 주소]({5})|",
+                        MessageFormat.format("|{0}|" +
+                                                "{1}|" +
+                                                "{2}|" +
+                                                "<img src=\"{3}\" width=\"20\" height=\"20\" /> {4}|" +
+                                                "[풀이]({5})|" +
+                                                "[문제 주소]({6})|",
                                             problem.getSolvedDate(),
                                             problem.getNumber(),
                                             problem.getName(),
+                                            problem.getTier().getImagePath(),
                                             problem.getTier().name(),
                                             problem.getGitRepoUrl(),
                                             problem.getProblemInfoUrl())

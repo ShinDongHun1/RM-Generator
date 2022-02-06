@@ -1,10 +1,15 @@
 package gitrepourlparser;
 
+import annotation.BOJ;
+import annotation.BaekjoonTier;
+import annotation.SolveDate;
+
 import java.text.MessageFormat;
 
 /**
  * 깃허브에 저장되는 위치를 만들어주는 클래스
  */
+@BOJ(number = 1000, tier = BaekjoonTier.SILVER_I, solveDate = @SolveDate(year = 2022, day = 1, month = 1))
 public class AnAGitRepositoryUrlParser implements GitRepositoryUrlParser {
 
     private static final String ANA_NAME = "AnA-algorithm";
