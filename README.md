@@ -247,3 +247,11 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 <br/>
 
 ![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_21.png)<br/>
+
+<br/>
+<br/>
+
+### 적용 안되거나 오류나면 카톡주세용!
+
+카톡 아이디 : huipulco
+
