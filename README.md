@@ -5,6 +5,12 @@
 
 ### (적용 사진)
 
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_4.png)
+
+<br/>
+
+<br/>
+
 ![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/7c9b73d3684e7afda2059ec810954170b694b43e/image/img_16.png)
 
 <br/>
@@ -13,7 +19,7 @@
 
 
 
-## 사용 방법
+## 사용하기 전 설정
 
 <br/>
 
@@ -91,7 +97,43 @@
 <br/>
 <br/>
 
-### 1. 자신만의 Repo에 적용
+### 주의사함
+
+주의할 점은 프로젝트를 실행시킬 때, 최상단 프로젝트 바로 하위폴더에 README가 생성되기 때문에, 기존에 README 파일이 존재하시는 분들이라면 사용에 주의하셔야 합니다.
+<br/>
+
+
+
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_16.png)
+
+<br/>위와같은 구조에서 코드를 실행하면 README는 다음 위치에 생성됩니다.<br/>
+
+
+
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_18.png)
+
+
+
+<br/>우리가 원하는 것은 백준 문제만 따로 관리하는 README이기 때문에, 다음 위치해서 실행해 주셔야 합니다.<br/>
+
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_19.png)
+
+
+
+<br/>실행 결과는 다음과 같습니다.<br/>
+
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_20.png)
+
+<br/>
+<br/>
+
+<br/>
+<br/>
+
+<br/>
+<br/>
+
+## 1. 자신만의 Repo에 적용
 
 자신만의 리포지토리에 저장하는 방법은 두가지입니다.
 
@@ -99,7 +141,7 @@
 
 <br/>
 
-### 1 - 1. PersonalGitRepositoryUrlParser 사용
+## 1 - 1. PersonalGitRepositoryUrlParser 사용
 
 Username과, 레포지토리의 이름, 그리고 메인 브랜치의 이름을 아래와 같이 설정 후 실행해주시면 끝납니다.<br/>
 setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메서드입니다.
@@ -128,7 +170,7 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 
 <br/><br/>
 
-### 1 - 2. AbsolutePathBeforePackageNameParser 사용
+## 1 - 2. AbsolutePathBeforePackageNameParser 사용
 
 
 
@@ -151,7 +193,7 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 <br/>
 <br/>
 
-### 2. 하루하나 알고리즘 Repo에 적용 - AnAGitRepositoryUrlParser
+## 2. 하루하나 알고리즘 Repo에 적용 - AnAGitRepositoryUrlParser
 
 <br/>
 
@@ -186,3 +228,18 @@ setTitle()은 README 의 제일 위에 쓰여질 제목을 지정해주는 메�
 생성되는 README.md 파일은 다음과 같습니다.<br/>
 
 ![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_14.png)
+
+
+
+<br/>
+<br/>
+
+## 사용 시 주의
+
+문제를 풀때마다 Generator를 실행시키는 것이 아닌, 문제를 다 풀고 난 후에 Generator를 한번만 실행시켜주시면 됩니다.
+
+아래 사진처럼 Generator 클래스를 따로 만들어 사용하는 것을 추천드립니다.
+
+<br/>
+
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_21.png)<br/>
