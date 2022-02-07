@@ -17,4 +17,7 @@ public @interface BOJ {
     BaekjoonTier tier() default UNDEFINED;//문제 단계
 
     SolveDate solveDate();
+
+
+
 }

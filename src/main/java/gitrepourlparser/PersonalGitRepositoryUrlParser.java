@@ -32,7 +32,8 @@ public class PersonalGitRepositoryUrlParser implements GitRepositoryUrlParser{
                 USERNAME,
                 REPOSITORY_NAME,
                 MAIN_BRANCH_NAME,
-                clazz.getPackageName().replace(".", "/"),//name1.name2 -> name1/name2로 변경
+                clazz.getPackage().getName().replace(".","/"),
+                //clazz.getPackageName().replace(".", "/"),//name1.name2 -> name1/name2로 변경
                 clazz.getSimpleName()
         );
     }
