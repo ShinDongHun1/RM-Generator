@@ -9,9 +9,7 @@ import gitrepourlparser.GitRepositoryUrlParser;
 import org.reflections.Reflections;
 import problem.BOJProblem;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,76 +20,96 @@ import java.util.Objects;
 /**
  * 백준 문제에 대한 README 생성기
  */
+
+@BOJ(number = 1001,solveDate = @SolveDate)
 public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
+
+    //== 클래스 변수 지정 ==//
+    private static final String FILE_NAME = "README.md";
+
+    private static final String DEFAULT_PATH= "";//경로는 최상위.
+
+    private static final String TITLE_PREFIX = "## ";// ## 제목 -> 제목 글자 크기 증가
+
+
+    private static final String DEFAULT_TITLE = "백준";//## 뒤에 올 제목 (최상단에 위치)
+    private String title = DEFAULT_TITLE;
+
+
+    private static final String TABLE_HEAD = "|날짜|번호|제목|난이도|풀이|문제 주소|\n" +
+                                             "|----|---|----|----|---|----|\n";
+
+    private static final String BOJ_URL = "https://www.acmicpc.net/problem/";
+    //== 클래스 변수 지정 종료==//
+
+    private static final Reflections REFLECTIONS = new Reflections("");
+
 
     private GitRepositoryUrlParser gitRepositoryUrlParser;
 
-    private static final String PATH_NAME = "README.md";
-
-    private static final String TITLE_PREFIX = "## ";
-
-
-    private String title = "백준";//README 파일 제목, 기본값은 백준
-
-
-
-    private static final String TABLE_HEAD = "|날짜|번호|제목|난이도|풀이|문제 주소|\n|---|---|---|---|---|---|\n";
-
-
-    private static final String BOJ_URL = "https://www.acmicpc.net/problem/";
-
 
     public BOJReadmeGenerator(GitRepositoryUrlParser gitRepositoryUrlParser) {
-        Objects.requireNonNull(gitRepositoryUrlParser);
+        Objects.requireNonNull(gitRepositoryUrlParser);//Null 체크, null이면 오류
 
         this.gitRepositoryUrlParser = gitRepositoryUrlParser;
     }
 
 
-    public void setTitle(String title) {
+    public void setTitle(String title) {//제목 결정
         this.title = title;
     }
 
 
+
+
+
     @Override
     public void generate() {
-        Reflections reflections = new Reflections("");
-        List<BOJProblem> bojProblems = getBOJProblems(reflections, BOJ.class);
-        bojProblems.sort(Comparator.naturalOrder());
+
+
+        List<BOJProblem> bojProblems = getBOJProblems();//백준(BOJ)문제 가져오기
+
+        bojProblems.sort(Comparator.naturalOrder());//푼 날짜 & 문제 번호 순으로 정렬
+
         writeReadMe(bojProblems);
     }
 
+
     private void writeReadMe(List<BOJProblem> bojProblems) {
-        File file = new File(PATH_NAME);
+        File file = new File(DEFAULT_PATH + FILE_NAME);
 
-        try (FileOutputStream stream = new FileOutputStream(file)) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
 
-            stream.write("\n".getBytes());
+            bw.write("\n");//줄바꿈
 
-            stream.write((TITLE_PREFIX+title).getBytes());
+            bw.write((TITLE_PREFIX+title));// ## 제목
 
-            stream.write("\n".getBytes());
+            bw.write("\n");//줄바꿈
 
-            stream.write(TABLE_HEAD.getBytes());
+            bw.write(TABLE_HEAD);//"|날짜|번호|제목|난이도|풀이|문제 주소|
+                                 // |----|---|----|----|---|----|\n";
+
+
 
             for (BOJProblem problem : bojProblems) {
-                //"|날짜|번호|제목|난이도|풀이|문제 주소|\n|---|---|---|---|---|\n";
-                stream.write(
-                        MessageFormat.format("|{0}|" +
-                                                "{1,number,#}|" +
-                                                "{2}|" +
-                                                "<img src=\"{3}\" width=\"20\" height=\"20\" /> {4}|" +
-                                                "[풀이]({5})|" +
-                                                "[문제 주소]({6})|",
+                //"|날짜|번호|제목|난이도|풀이|문제 주소|
+                // |----|---|----|----|---|----|\n";
+                bw.write(
+                        MessageFormat.format("|{0}|" +   //풀이 날짜
+                                                "{1,number,#}|" +//문제 번호, #을 안넣어주면 1000 -> 1,000으로 출력됨
+                                                "{2}|" +        //문제 이름
+                                                "<img src=\"{3}\" width=\"20\" height=\"20\" /> {4}|" +//문제 티어의 이미지 + 문제 티어
+                                                "[풀이]({5})|" +//풀이 주소 (깃허브 주소)
+                                                "[문제 주소]({6})|",//문제 주소 (BOJ 주소)
+
                                             problem.getSolvedDate(),
                                             problem.getNumber(),
                                             problem.getName(),
                                             problem.getTier().getImagePath(),
                                             problem.getTier().name(),
                                             problem.getGitRepoUrl(),
-                                            problem.getProblemInfoUrl())
-                                .getBytes());
-                stream.write("\n".getBytes());
+                                            problem.getProblemInfoUrl()));
+                bw.write("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,21 +117,25 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
     }
 
 
-    private List<BOJProblem> getBOJProblems(Reflections reflections, final Class<BOJ> bojClass ){
+
+    private List<BOJProblem> getBOJProblems(){
         List<BOJProblem> result = new ArrayList<>();
 
+        REFLECTIONS.getTypesAnnotatedWith(BOJ.class)//@BOJ가 붙은 클래스 모두 가져오기
+                .forEach(bojProblem -> {
+                    BOJ atBoj = bojProblem.getDeclaredAnnotation(BOJ.class);//@BOJ가 붙은 클래스에 설정된 @BOJ 정보 읽어오기 [atBOJ는 annotation BOJ 줄인거]
+                    result.add(
+                            BOJProblem.builder()
+                                    .gitRepoUrl(gitRepositoryUrlParser.getFullPath(bojProblem))//해당 문제의 클래스 정보
+                                    .tier(atBoj.tier())
+                                    .number(atBoj.number())
+                                    .problemInfoUrl(BOJ_URL+atBoj.number())
+                                    .solvedDate(LocalDate.of(atBoj.solveDate().year(), atBoj.solveDate().month(), atBoj.solveDate().day()))
+                                    .name(BOJCrawler.getProblemName(atBoj.number()))
+                                    .build()
+                    );
+                });
 
-        for (Class<?> bogProblemClass : reflections.getTypesAnnotatedWith(bojClass)) {//어노테이션이 붙은 클래스들 모두 가져오기 -> 문제들 다 가져옴
-            BOJ anno = bogProblemClass.getDeclaredAnnotation(bojClass);
-            result.add(BOJProblem.builder()
-                    .gitRepoUrl(gitRepositoryUrlParser.getFullPath(bogProblemClass))
-                    .tier(anno.tier())
-                    .number(anno.number())
-                    .problemInfoUrl(BOJ_URL+anno.number())
-                    .solvedDate(LocalDate.of(anno.solveDate().year(), anno.solveDate().month(), anno.solveDate().day()))//풀이 시간은 현재 시간
-                    .name(BOJCrawler.getProblemName(anno.number()))
-                    .build());
-        }
         return result;
     }
 }

@@ -14,7 +14,9 @@ public class BOJCrawler {
     private BOJCrawler() {}
 
     public static final String getProblemName(int number) {
+
         String title = "undefined";
+
         Connection connect = Jsoup.connect(BOJ_URL + number);
         try {
             Elements elements = connect.get().select(DIV_CSS);

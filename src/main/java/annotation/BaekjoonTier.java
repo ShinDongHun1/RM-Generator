@@ -23,6 +23,7 @@ public enum BaekjoonTier {
 
 
     private int num;
+
     BaekjoonTier(int num) {
         this.num = num;
     }

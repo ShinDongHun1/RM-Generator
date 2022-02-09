@@ -18,7 +18,7 @@ public class AbsolutePathBeforePackageNameParser implements GitRepositoryUrlPars
         return MessageFormat.format("{0}/{1}/{2}.java",
                 absolutePathBeforePackageName,
                 clazz.getPackage().getName().replace(".", "/"),
-                //clazz.getPackageName().replace(".", "/"),//name1.name2 -> name1/name2로 변경
+
                 clazz.getSimpleName()
         );
     }

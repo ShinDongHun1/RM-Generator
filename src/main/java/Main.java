@@ -1,11 +1,8 @@
-import crawling.BOJCrawler;
+
 import gitrepourlparser.AbsolutePathBeforePackageNameParser;
-import gitrepourlparser.AnAGitRepositoryUrlParser;
-import gitrepourlparser.GitRepositoryUrlParser;
 import gitrepourlparser.PersonalGitRepositoryUrlParser;
 import readmegenerator.BOJReadmeGenerator;
 
-import java.lang.reflect.Field;
 
 public class Main {
 
@@ -37,17 +34,6 @@ public class Main {
 
 
 
-
-        //== ANA 하루하나 알고리즘 리드미 만드는 코드 ==//
-        AnAGitRepositoryUrlParser anaParser = new AnAGitRepositoryUrlParser();
-
-        anaParser.setUsername("신동훈");//자기이름 입력
-
-        rg = new BOJReadmeGenerator(anaParser);
-
-        rg.setTitle("동훈이의 하루하나 알고리즘");//안해줄 경우 기본값인 "백준" 사용
-
-        rg.generate();
 
     }
 }

@@ -18,6 +18,7 @@ public class BOJProblem implements Problem, Comparable<BOJProblem>{
     private LocalDate solvedDate;   //2022-10-02
 
 
+
     public BOJProblem(String problemInfoUrl, String gitRepoUrl, String name, int number, BaekjoonTier tier, LocalDate solvedDate) {
         this.problemInfoUrl = problemInfoUrl;
         this.gitRepoUrl = gitRepoUrl;
@@ -28,12 +29,9 @@ public class BOJProblem implements Problem, Comparable<BOJProblem>{
     }
 
 
-    public static Builder builder(){
-        return new Builder();
-    }
-
     @Override
     public int compareTo(BOJProblem o) {
+        //오름차순 정렬
         if(solvedDate.isBefore(o.solvedDate)) return -1;
         if(solvedDate.isAfter(o.solvedDate)) return 1;
 
@@ -44,6 +42,38 @@ public class BOJProblem implements Problem, Comparable<BOJProblem>{
         return 1;
     }
 
+    //Getter
+    public String getProblemInfoUrl() {
+        return problemInfoUrl;
+    }
+
+    public String getGitRepoUrl() {
+        return gitRepoUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public BaekjoonTier getTier() {
+        return tier;
+    }
+
+    public LocalDate getSolvedDate() {
+        return solvedDate;
+    }
+
+
+    //== 빌더 반환 ==//
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    //== 빌더 ==//
     public static class Builder {
         private String problemInfoUrl;//문제 주소
         private String gitRepoUrl;//문제 주소
@@ -81,30 +111,6 @@ public class BOJProblem implements Problem, Comparable<BOJProblem>{
             return new BOJProblem(problemInfoUrl,
                     gitRepoUrl , name, number,tier, solvedDate);
         }
-    }
-
-    public String getProblemInfoUrl() {
-        return problemInfoUrl;
-    }
-
-    public String getGitRepoUrl() {
-        return gitRepoUrl;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public BaekjoonTier getTier() {
-        return tier;
-    }
-
-    public LocalDate getSolvedDate() {
-        return solvedDate;
     }
 }
 
