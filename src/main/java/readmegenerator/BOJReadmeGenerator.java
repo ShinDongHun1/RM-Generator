@@ -20,8 +20,6 @@ import java.util.Objects;
 /**
  * 백준 문제에 대한 README 생성기
  */
-
-@BOJ(number = 1001,solveDate = @SolveDate)
 public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
     //== 클래스 변수 지정 ==//
