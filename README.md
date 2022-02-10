@@ -1,42 +1,46 @@
-## RM - Generator
+# RM - Generator
+
+<br/>
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FShinDongHun1%2FRM-Generator%2Ftree%2Fmain&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
+<br/><br/>
+
+<br/>
 
 
 
+## ⭐ @애노테이션을 통한 알고리즘 풀이 README 자동 생성기
 
-### ⭐ @애노테이션을 통한 알고리즘 풀이 README 자동 생성기
-
-
+<br/><br/>
 
 ![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img.png)
 
 
 
+<br/>
 
+<br/>
 
+<br/>
 
+# ❔ HOW TO USE
 
-
-
-## ❔ HOW TO USE
-
-
+<br/>
 
 ### ✔ Java version :  11버전 이상
 
 
 
-
+<br/>
 
 ### ✔ Download jar file
 
-[다운로드 링크](https://github.com/ShinDongHun1/RM-Generator/blob/main/ReadMeGenerator-1.0.jar)
+- [다운로드 링크](https://github.com/ShinDongHun1/RM-Generator/blob/main/ReadMeGenerator-1.0.jar)
+- 저장 경로는 상관없습니다.
 
-저장 경로는 상관없습니다.
 
-
+<br/>
 
 
 
@@ -46,13 +50,17 @@
 
 
 
+<br/>
 
+<br/>
 
-### ✔ 적용
+<br/>
 
+## ✔ 적용 방법
 
+<br/>
 
-### 🔍 클래스 이름 규칙
+###  🔍 클래스 이름 규칙
 
 - [ **XXX문제번호** ] 의 형식으로 만들어 주셔야 합니다. (EX : 백준1000, Q1000 등)
 - 이게 싫으시다면, @BOJ의 number 속성에 문제 번호를 직접 입력해 주셔야 합니다.
@@ -67,9 +75,9 @@
 
 ![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_2.png)
 
+<br/>
 
-
-
+<br/>
 
 ### 🔍 속성
 
@@ -80,17 +88,15 @@
 
 
 
+<br/>
 
+<br/>
 
-
-
-
-
-
+<br/>
 
 ## ❔ 궁금할만한 사항
 
-
+<br/>
 
 ### ❓ README 파일은 어디에 생성되나요?
 
@@ -98,25 +104,24 @@
 
 ![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_3.png)
 
+<br/>
 
-
-
+<br/>
 
 ### ❓ 이미 README에 작성된 문제의 풀이 날짜를 수정할 방법은 없나요?
 
 ####    ✔ 애노테이션을 제거한 후, RM-Generator를 실행시키면 README 파일에서 문제가 삭제됩니다. 이후 다시 @BOJ를 붙이고 solveDate 속성을 통해 원하는 날짜를 입력해주세요!
 
+<br/>
 
+<br/>
 
-
-
-
+<br/>
 
 ## 📫 Contact Me
 
+**Kakao : huipulco**
 
+<br/>
 
-Kakao : huipulco
-
-
-
+<br/>
