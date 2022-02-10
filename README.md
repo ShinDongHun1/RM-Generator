@@ -22,7 +22,7 @@
 
 <br/>
 
-# ❔ HOW TO USE
+# ❔ Preparation
 
 <br/>
 
@@ -30,15 +30,10 @@
 
 
 
-<br/>
-
 ### ✔ Download jar file
 
 - [다운로드 링크](https://github.com/ShinDongHun1/RM-Generator/blob/main/ReadMeGenerator-1.0.jar)
 - 저장 경로는 상관없습니다.
-
-
-<br/>
 
 
 
@@ -54,18 +49,18 @@
 
 <br/>
 
-## 👓 적용 방법
+# ❔ 적용 방법
 
 <br/>
 
-###  🔍 클래스 이름 규칙
+### ✔ 클래스 이름 규칙
 
 - [ **XXX문제번호** ] 의 형식으로 만들어 주셔야 합니다. (EX : 백준1000, Q1000 등)
 - 이게 싫으시다면, @BOJ의 number 속성에 문제 번호를 직접 입력해 주셔야 합니다.
 
 
 
-#### 예시
+### 예시
 
 ![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_1.png)
 
@@ -77,7 +72,7 @@
 
 <br/>
 
-### 🔍 속성
+### ✔ 속성
 
 - **number** : 문제의 번호를 입력합니다. 입력하지 않으면 클래스의 이름에서 문제 번호를 추출합니다. 만약 클래스의 이름 형식이 올바르지 않다면 예외를 발생시킵니다.
 - **solveDate** : 문제를 푼 날짜를 입력할 수 있습니다. 입력하지 않는다면 오늘 날짜로 자동 저장됩니다. 
@@ -90,7 +85,7 @@
 
 <br/>
 
-## 💻 RM-Generate 실행 코드
+# ❔ RM-Generate 실행 코드
 
 <br/>
 
@@ -98,7 +93,7 @@
 
 <br/>
 
-**setAbsolutePathBeforePackageName()**을 통해 풀이가 올라갈 Git Repo의 패키지 이름 전까지의 URL을 입력해주세요.
+setAbsolutePathBeforePackageName()을 통해 풀이가 올라갈 Git Repo의 패키지 이름 전까지의 URL을 입력해주세요.
 
 
 
