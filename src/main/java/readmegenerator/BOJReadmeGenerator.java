@@ -63,6 +63,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
     @Override
     public void generate() {
 
+
         File file = new File(README);
 
         List<BOJProblem> existBOJProblem = getExistBOJProblemsFrom(file);
@@ -81,7 +82,9 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
 
     private void writeReadMe(List<BOJProblem> bojProblems) {
+
         File file = new File(README);
+
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
 
