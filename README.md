@@ -6,13 +6,11 @@
 
 <br/><br/>
 
-<br/>
-
 
 
 ## ⭐ @애노테이션을 통한 알고리즘 풀이 README 자동 생성기
 
-<br/><br/>
+<br/>
 
 ![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img.png)
 
@@ -56,7 +54,7 @@
 
 <br/>
 
-## ✔ 적용 방법
+## 👓 적용 방법
 
 <br/>
 
@@ -92,15 +90,59 @@
 
 <br/>
 
-<br/>
-
-## ❔ 궁금할만한 사항
+## 💻 RM-Generate 실행 코드
 
 <br/>
 
-### ❓ README 파일은 어디에 생성되나요?
+### 1. AbsolutePathBeforePackageNameParser 사용
 
-####     ✔ 현재 프로젝트의 최상단에 생성됩니다
+<br/>
+
+**setAbsolutePathBeforePackageName()**을 통해 풀이가 올라갈 Git Repo의 패키지 이름 전까지의 URL을 입력해주세요.
+
+
+
+예를 들어 **https://github.com/ShinDongHun1/Algorithm/blob/main/BOJ/src/bfs와dfs/백준1260.java** 다음 경로에 풀이가 올라간다고 하면
+
+"**https://github.com/ShinDongHun1/Algorithm/blob/main/BOJ/src**" 까지만 입력해 주시면 됩니다
+
+<br/>
+
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_4.png)
+
+<br/>
+
+<br/>
+
+### 2. PersonalGitRepositoryUrlParser사용
+
+깃허브 이름(Username)과, Repository 이름, 메인 브랜치 이름을 통해 저장 경로를 생성해줍니다.
+
+그러나 아래 사진처럼 src 파일이 경로에 포함되는 경우, 제대로 생성이 되지 않을 수 있으므로, 제대로 생성이 되지 않았다면 1번을 이용하여 생성해주세요!
+
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_5.png)
+
+<br/>
+
+#### 사용 예시
+
+![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_6.png)
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+# ❔ 궁금할만한 사항
+
+<br/>
+
+## ❓ README 파일은 어디에 생성되나요?
+
+###     ✔ 현재 프로젝트의 최상단에 생성됩니다
 
 ![image-20220206225110452](https://github.com/ShinDongHun1/RM-Generator/blob/main/image/img_3.png)
 
@@ -108,17 +150,17 @@
 
 <br/>
 
-### ❓ 이미 README에 작성된 문제의 풀이 날짜를 수정할 방법은 없나요?
+## ❓ 이미 README에 작성된 문제의 풀이 날짜를 수정할 방법은 없나요?
 
-####    ✔ 애노테이션을 제거한 후, RM-Generator를 실행시키면 README 파일에서 문제가 삭제됩니다. 이후 다시 @BOJ를 붙이고 solveDate 속성을 통해 원하는 날짜를 입력해주세요!
-
-<br/>
+###    ✔ 애노테이션을 제거한 후, RM-Generator를 실행시키면 README 파일에서 문제가 삭제됩니다. 이후 다시 @BOJ를 붙이고 solveDate 속성을 통해 원하는 날짜를 입력해주세요!
 
 <br/>
 
 <br/>
 
-## 📫 Contact Me
+<br/>
+
+# 📫 Contact Me
 
 **Kakao : huipulco**
 
