@@ -15,9 +15,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class ReadmeMapper {
-    /**
-     * TODO : README파일 전체 읽어서 BOJProblem로 바꿔줘!
-     */
+
 
     public static List<BOJProblem> readFile(File file, Class<BOJProblem> clazz) {
         ArrayList<BOJProblem> existedLog = new ArrayList<>();
@@ -58,17 +56,6 @@ public class ReadmeMapper {
         return existedLog;
     }
 
-    public static void main(String[] args) {
-        //== 개인 리포지토리에 리드미 만드는 코드 ==//
-        PersonalGitRepositoryUrlParser parser = new PersonalGitRepositoryUrlParser("ShinDongHun1", "BOJ", "main");
-
-        BOJReadmeGenerator rg = new BOJReadmeGenerator(parser);
-
-        rg.setTitle("동훈이의 백준 문제 풀이");//안해줄 경우 기본값인 "백준" 사용
-
-        rg.generate();
-
-    }
 
 
 }
