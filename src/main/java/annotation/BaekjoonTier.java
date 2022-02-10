@@ -1,6 +1,8 @@
 package annotation;
 
 
+import java.util.Arrays;
+
 public enum BaekjoonTier {
 
 
@@ -28,9 +30,15 @@ public enum BaekjoonTier {
         this.num = num;
     }
 
+    public static BaekjoonTier getByPath(String imagePathElem) {
+        return Arrays.stream(BaekjoonTier.values()).filter(tier -> tier.getImagePath().equals(imagePathElem)).findAny().get();
+    }
+
     public String getImagePath(){
         return IMAGE_PATH_PREFIX + num + IMAGE_PATH_SUFFIX;
     };
+
+
 }
 
 

@@ -31,9 +31,5 @@ public class Main {
 
         rg.generate();
 
-
-
-
-
     }
 }

@@ -3,20 +3,18 @@ package annotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static annotation.BaekjoonTier.UNDEFINED;
-import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target(TYPE)//클래스에 붙일 어노테이션
+@Target(TYPE)//
 @Retention(RUNTIME)
 public @interface BOJ {
 
-    int number() default 0; //문제 번호
-
-    BaekjoonTier tier() default UNDEFINED;//문제 단계
+    int number() default -1; //문제 번호
 
     SolveDate solveDate();
+
+    static final int DEFAULT_NUMBER = -1;
 
 
 

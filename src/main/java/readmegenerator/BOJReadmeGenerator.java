@@ -6,16 +6,15 @@ import annotation.BaekjoonTier;
 import annotation.SolveDate;
 import crawling.BOJCrawler;
 import gitrepourlparser.GitRepositoryUrlParser;
+import mapper.ReadmeMapper;
 import org.reflections.Reflections;
 import problem.BOJProblem;
 
 import java.io.*;
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 백준 문제에 대한 README 생성기
@@ -35,7 +34,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
 
     private static final String TABLE_HEAD = "|날짜|번호|제목|난이도|풀이|문제 주소|\n" +
-                                             "|----|---|----|----|---|----|\n";
+            "|----|---|----|----|---|----|\n";
 
     private static final String BOJ_URL = "https://www.acmicpc.net/problem/";
     //== 클래스 변수 지정 종료==//
@@ -64,12 +63,21 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
     @Override
     public void generate() {
 
+        //리드미 파일을 읽어서 존재하는 문제들 List로 만들어
+        //readFileAsBOJProblem
+        File file = new File(DEFAULT_PATH + FILE_NAME);
 
-        List<BOJProblem> bojProblems = getBOJProblems();//백준(BOJ)문제 가져오기
+        List<BOJProblem> existBOJProblem = ReadmeMapper.readFile(file, BOJProblem.class);
 
-        bojProblems.sort(Comparator.naturalOrder());//푼 날짜 & 문제 번호 순으로 정렬
+        //존재하는 문제들을 제외한 새로운 어노테이션이 달린 문제들을 읽어와
+        List<BOJProblem> newBojProblems = getNewBOJProblems(existBOJProblem);//백준(BOJ)문제 가져오기
 
-        writeReadMe(bojProblems);
+        newBojProblems.addAll(existBOJProblem);
+        //정렬한 뒤에
+        newBojProblems.sort(Comparator.naturalOrder());//푼 날짜 & 문제 번호 순으로 정렬
+
+        //다시 써
+        writeReadMe(newBojProblems);
     }
 
 
@@ -85,7 +93,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
             bw.write("\n");//줄바꿈
 
             bw.write(TABLE_HEAD);//"|날짜|번호|제목|난이도|풀이|문제 주소|
-                                 // |----|---|----|----|---|----|\n";
+            // |----|---|----|----|---|----|\n";
 
 
 
@@ -94,19 +102,19 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
                 // |----|---|----|----|---|----|\n";
                 bw.write(
                         MessageFormat.format("|{0}|" +   //풀이 날짜
-                                                "{1,number,#}|" +//문제 번호, #을 안넣어주면 1000 -> 1,000으로 출력됨
-                                                "{2}|" +        //문제 이름
-                                                "<img src=\"{3}\" width=\"20\" height=\"20\" /> {4}|" +//문제 티어의 이미지 + 문제 티어
-                                                "[풀이]({5})|" +//풀이 주소 (깃허브 주소)
-                                                "[문제 주소]({6})|",//문제 주소 (BOJ 주소)
+                                        "{1,number,#}|" +//문제 번호, #을 안넣어주면 1000 -> 1,000으로 출력됨
+                                        "{2}|" +        //문제 이름
+                                        "<img src=\"{3}\" width=\"20\" height=\"20\" /> {4}|" +//문제 티어의 이미지 + 문제 티어
+                                        "[풀이]({5})|" +//풀이 주소 (깃허브 주소)
+                                        "[문제 주소]({6})|",//문제 주소 (BOJ 주소)
 
-                                            problem.getSolvedDate(),
-                                            problem.getNumber(),
-                                            problem.getName(),
-                                            problem.getTier().getImagePath(),
-                                            problem.getTier().name(),
-                                            problem.getGitRepoUrl(),
-                                            problem.getProblemInfoUrl()));
+                                problem.getSolvedDate(),
+                                problem.getNumber(),
+                                problem.getName(),
+                                problem.getTier().getImagePath(),
+                                problem.getTier().name(),
+                                problem.getGitRepoUrl(),
+                                problem.getProblemInfoUrl()));
                 bw.write("\n");
             }
         } catch (IOException e) {
@@ -115,25 +123,74 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
     }
 
 
-
-    private List<BOJProblem> getBOJProblems(){
+    private List<BOJProblem> getNewBOJProblems(List<BOJProblem> existBOJProblems){
         List<BOJProblem> result = new ArrayList<>();
 
-        REFLECTIONS.getTypesAnnotatedWith(BOJ.class)//@BOJ가 붙은 클래스 모두 가져오기
-                .forEach(bojProblem -> {
-                    BOJ atBoj = bojProblem.getDeclaredAnnotation(BOJ.class);//@BOJ가 붙은 클래스에 설정된 @BOJ 정보 읽어오기 [atBOJ는 annotation BOJ 줄인거]
-                    result.add(
-                            BOJProblem.builder()
-                                    .gitRepoUrl(gitRepositoryUrlParser.getFullPath(bojProblem))//해당 문제의 클래스 정보
-                                    .tier(atBoj.tier())
-                                    .number(atBoj.number())
-                                    .problemInfoUrl(BOJ_URL+atBoj.number())
-                                    .solvedDate(LocalDate.of(atBoj.solveDate().year(), atBoj.solveDate().month(), atBoj.solveDate().day()))
-                                    .name(BOJCrawler.getProblemName(atBoj.number()))
-                                    .build()
-                    );
-                });
+        List<Integer> existNumbers = existBOJProblems.stream().filter(Objects::nonNull).map(BOJProblem::getNumber).collect(Collectors.toList());
+
+
+        Set<Class<?>> classesWithAtBOJ = REFLECTIONS.getTypesAnnotatedWith(BOJ.class);
+
+        for (Class<?> classWithAtBOJ : classesWithAtBOJ) {
+            BOJ atBoj = classWithAtBOJ.getDeclaredAnnotation(BOJ.class);
+            if(existNumbers.contains(getNumberFrom(classWithAtBOJ.getSimpleName(), atBoj))){
+                continue;
+            };
+
+            //새로운 문제일 경우 생성
+            result.add(convertToBOJProblem(classWithAtBOJ));
+        }
+
+
+
 
         return result;
     }
+
+    private BOJProblem convertToBOJProblem(Class<?> classWithAtBOJ) {
+        BOJ atBoj = classWithAtBOJ.getDeclaredAnnotation(BOJ.class);
+
+
+        //클래스 이름 or 어노테이션에 붙은 number를 통해 문제 번호 가져오기
+        int number = getNumberFrom(classWithAtBOJ.getSimpleName(), atBoj);
+        Map<Class<?>, Object> problemNameAndTier = BOJCrawler.getProblemNameAndTier(number);
+        BaekjoonTier tier = BaekjoonTier.class.cast(problemNameAndTier.get(BaekjoonTier.class));
+        String name = String.class.cast(problemNameAndTier.get(String.class));
+        String problemInfoURL = BOJ_URL+number;
+        String gitRepoURL = gitRepositoryUrlParser.getFullPath(classWithAtBOJ);
+
+        return BOJProblem.builder()
+                .gitRepoUrl(gitRepositoryUrlParser.getFullPath(classWithAtBOJ))//해당 문제의 클래스 정보
+                .tier(tier)
+                .number(number)
+                .problemInfoUrl(problemInfoURL)
+                .solvedDate(LocalDate.of(atBoj.solveDate().year(), atBoj.solveDate().month(), atBoj.solveDate().day()))
+                .name(name)
+                .build();
+
+    }
+
+    private BaekjoonTier getTierFrom(int number) {
+        return null;
+    }
+
+    private int getNumberFrom(String className, BOJ atBoj) {
+        return (atBoj.number() == BOJ.DEFAULT_NUMBER) ?
+                extractNumberFrom(className) :
+                atBoj.number();
+    }
+
+    private int extractNumberFrom(String className) {
+        if(!Character.isDigit(className.charAt(className.length()-1))){
+            throw new IllegalStateException("클래스 이름 형식이 잘못되었습니다. 형식 [~~~~문제번호]");
+        }
+        for(int i = className.length() -1; i >= 0; i--) {
+            if (!Character.isDigit(className.charAt(i))) {
+                return Integer.parseInt(className.substring(i+1));
+            }
+        }
+        throw new IllegalStateException("클래스 이름 형식이 잘못되었습니다. 형식 [~~~~문제번호]");
+    }
+
+
 }
