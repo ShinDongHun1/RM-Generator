@@ -3,6 +3,7 @@ package problem;
 import annotation.boj.BOJTier;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * 문제에 대한 정보
@@ -111,6 +112,21 @@ public class BOJProblem implements Problem, Comparable<BOJProblem>{
             return new BOJProblem(problemInfoUrl,
                     gitRepoUrl , name, number,tier, solvedDate);
         }
+    }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BOJProblem that = (BOJProblem) o;
+        return getNumber() == that.getNumber();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumber());
     }
 }
 

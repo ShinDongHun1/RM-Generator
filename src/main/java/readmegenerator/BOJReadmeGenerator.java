@@ -66,6 +66,7 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
         File file = new File(README);
 
+
         List<BOJProblem> existBOJProblem = getExistBOJProblemsFrom(file);
         List<BOJProblem> newBojProblems = getNewBOJProblemsExceptFor(existBOJProblem);
 
@@ -75,6 +76,8 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
         //다시 써
         writeReadMe(newBojProblems);
     }
+
+
 
     private List<BOJProblem> getExistBOJProblemsFrom(File file) {
         return ReadmeMapper.readFile(file, BOJProblem.class);
@@ -128,9 +131,25 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
                 .collect(Collectors.toList());
 
 
+        Set<Class<?>> typesAnnotatedWith = REFLECTIONS.getTypesAnnotatedWith(bojClass);
+
+        List<Integer> annotatedNumbers = new ArrayList<>();
+        typesAnnotatedWith.forEach(aClass -> {
+            BOJ atBoj = aClass.getDeclaredAnnotation(bojClass);
+            annotatedNumbers.add(getNumberFrom(aClass.getSimpleName(), atBoj));
+        });
+
+
+        existNumbers.stream()
+                .filter(existNumber -> !annotatedNumbers.contains(existNumber))
+                .forEach(existNumber -> existBOJProblems.remove(BOJProblem.builder().number(existNumber).build()));
+                        //equals and hashcode 재정의해서 number가 같다면 같은 걸로 취급
+
+
+
+
         List<BOJProblem> result = new ArrayList<>();
-        
-        REFLECTIONS.getTypesAnnotatedWith(bojClass)
+        typesAnnotatedWith
                 .stream()
                 .filter(aClass -> isNewProblem(existNumbers,aClass))
                 .forEach(aClass -> result.add(convertToBOJProblem(aClass)));
