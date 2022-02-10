@@ -1,4 +1,6 @@
-package annotation;
+package annotation.boj;
+
+import annotation.SolveDate;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -12,9 +14,10 @@ public @interface BOJ {
 
     int number() default -1; //문제 번호
 
-    SolveDate solveDate();
+    SolveDate solveDate() default @SolveDate;
 
     static final int DEFAULT_NUMBER = -1;
+
 
 
 

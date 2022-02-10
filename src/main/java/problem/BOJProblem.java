@@ -1,6 +1,6 @@
 package problem;
 
-import annotation.BaekjoonTier;
+import annotation.boj.BaekjoonTier;
 
 import java.time.LocalDate;
 

@@ -1,8 +1,5 @@
 package gitrepourlparser;
 
-import annotation.BOJ;
-import annotation.SolveDate;
-
 
 public interface GitRepositoryUrlParser {
 

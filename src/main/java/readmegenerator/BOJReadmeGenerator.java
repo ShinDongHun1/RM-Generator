@@ -1,16 +1,18 @@
 package readmegenerator;
 
 
-import annotation.BOJ;
-import annotation.BaekjoonTier;
-import annotation.SolveDate;
-import crawling.BOJCrawler;
+import annotation.boj.BOJ;
+import annotation.boj.BaekjoonTier;
+import crawling.boj.BOJCrawler;
 import gitrepourlparser.GitRepositoryUrlParser;
 import mapper.ReadmeMapper;
-import org.reflections.Reflections;
 import problem.BOJProblem;
+import url.URL;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -22,36 +24,36 @@ import java.util.stream.Collectors;
 public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
     //== 클래스 변수 지정 ==//
-    private static final String FILE_NAME = "README.md";
-
-    private static final String DEFAULT_PATH= "";//경로는 최상위.
+    /**
+     * 파일 이름 :  README.md -> README
+     * 리드미 파일의 제목 : ## 백준(or 원하는 이름)
+     *
+     * (테이블 표 만들기)
+     * |날짜|번호|제목|난이도|풀이|문제 주소|
+     * |----|---|----|----|---|----|
+     *
+     */
+    private static final String README = "README.md";
 
     private static final String TITLE_PREFIX = "## ";// ## 제목 -> 제목 글자 크기 증가
-
-
     private static final String DEFAULT_TITLE = "백준";//## 뒤에 올 제목 (최상단에 위치)
-    private String title = DEFAULT_TITLE;
-
 
     private static final String TABLE_HEAD = "|날짜|번호|제목|난이도|풀이|문제 주소|\n" +
-            "|----|---|----|----|---|----|\n";
+                                              "|----|---|----|----|---|----|\n";
 
-    private static final String BOJ_URL = "https://www.acmicpc.net/problem/";
+
+    private static final URL BOJ_URL = URL.BOJ;
     //== 클래스 변수 지정 종료==//
 
-    private static final Reflections REFLECTIONS = new Reflections("");
 
 
     private GitRepositoryUrlParser gitRepositoryUrlParser;
 
-
     public BOJReadmeGenerator(GitRepositoryUrlParser gitRepositoryUrlParser) {
-        Objects.requireNonNull(gitRepositoryUrlParser);//Null 체크, null이면 오류
-
-        this.gitRepositoryUrlParser = gitRepositoryUrlParser;
+        this.gitRepositoryUrlParser = Objects.requireNonNull(gitRepositoryUrlParser);//Null 체크, null이면 오류
     }
 
-
+    private String title = DEFAULT_TITLE;
     public void setTitle(String title) {//제목 결정
         this.title = title;
     }
@@ -63,26 +65,25 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
     @Override
     public void generate() {
 
-        //리드미 파일을 읽어서 존재하는 문제들 List로 만들어
-        //readFileAsBOJProblem
-        File file = new File(DEFAULT_PATH + FILE_NAME);
+        File file = new File(README);
 
-        List<BOJProblem> existBOJProblem = ReadmeMapper.readFile(file, BOJProblem.class);
-
-        //존재하는 문제들을 제외한 새로운 어노테이션이 달린 문제들을 읽어와
-        List<BOJProblem> newBojProblems = getNewBOJProblems(existBOJProblem);//백준(BOJ)문제 가져오기
+        List<BOJProblem> existBOJProblem = getExistBOJProblemsFrom(file);
+        List<BOJProblem> newBojProblems = getNewBOJProblemsExceptFor(existBOJProblem);
 
         newBojProblems.addAll(existBOJProblem);
-        //정렬한 뒤에
         newBojProblems.sort(Comparator.naturalOrder());//푼 날짜 & 문제 번호 순으로 정렬
 
         //다시 써
         writeReadMe(newBojProblems);
     }
 
+    private List<BOJProblem> getExistBOJProblemsFrom(File file) {
+        return ReadmeMapper.readFile(file, BOJProblem.class);
+    }
+
 
     private void writeReadMe(List<BOJProblem> bojProblems) {
-        File file = new File(DEFAULT_PATH + FILE_NAME);
+        File file = new File(README);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
 
@@ -123,29 +124,34 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
     }
 
 
-    private List<BOJProblem> getNewBOJProblems(List<BOJProblem> existBOJProblems){
+    private List<BOJProblem> getNewBOJProblemsExceptFor(List<BOJProblem> existBOJProblems){
+
+        List<Integer> existNumbers = existBOJProblems.stream()
+                .filter(Objects::nonNull)
+                .map(BOJProblem::getNumber)
+                .collect(Collectors.toList());
+
+
         List<BOJProblem> result = new ArrayList<>();
-
-        List<Integer> existNumbers = existBOJProblems.stream().filter(Objects::nonNull).map(BOJProblem::getNumber).collect(Collectors.toList());
-
-
-        Set<Class<?>> classesWithAtBOJ = REFLECTIONS.getTypesAnnotatedWith(BOJ.class);
-
-        for (Class<?> classWithAtBOJ : classesWithAtBOJ) {
-            BOJ atBoj = classWithAtBOJ.getDeclaredAnnotation(BOJ.class);
-            if(existNumbers.contains(getNumberFrom(classWithAtBOJ.getSimpleName(), atBoj))){
-                continue;
-            };
-
-            //새로운 문제일 경우 생성
-            result.add(convertToBOJProblem(classWithAtBOJ));
-        }
-
-
-
+        REFLECTIONS.getTypesAnnotatedWith(BOJ.class)
+                .stream()
+                .filter(aClass -> isNewProblem(existNumbers,aClass))
+                .forEach(aClass -> result.add(convertToBOJProblem(aClass)));
 
         return result;
     }
+
+
+    private boolean isNewProblem(List<Integer> existNumbers, Class<?> classWithAtBOJ) {
+
+        //가지고 있지 않음 -> 즉 새로운 문제라면 true
+        return !existNumbers.contains(
+                //이름 혹은 어노테이션이 가진 number를 통해 문제번호를 가져옴
+                getNumberFrom(classWithAtBOJ.getSimpleName(), classWithAtBOJ.getDeclaredAnnotation(BOJ.class))
+        );
+    }
+
+
 
     private BOJProblem convertToBOJProblem(Class<?> classWithAtBOJ) {
         BOJ atBoj = classWithAtBOJ.getDeclaredAnnotation(BOJ.class);
@@ -153,10 +159,12 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
         //클래스 이름 or 어노테이션에 붙은 number를 통해 문제 번호 가져오기
         int number = getNumberFrom(classWithAtBOJ.getSimpleName(), atBoj);
+
         Map<Class<?>, Object> problemNameAndTier = BOJCrawler.getProblemNameAndTier(number);
         BaekjoonTier tier = BaekjoonTier.class.cast(problemNameAndTier.get(BaekjoonTier.class));
         String name = String.class.cast(problemNameAndTier.get(String.class));
-        String problemInfoURL = BOJ_URL+number;
+
+        String problemInfoURL = BOJ_URL.getUrl()+number;
         String gitRepoURL = gitRepositoryUrlParser.getFullPath(classWithAtBOJ);
 
         return BOJProblem.builder()
@@ -164,15 +172,20 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
                 .tier(tier)
                 .number(number)
                 .problemInfoUrl(problemInfoURL)
-                .solvedDate(LocalDate.of(atBoj.solveDate().year(), atBoj.solveDate().month(), atBoj.solveDate().day()))
+                .solvedDate(getSolveDate(atBoj))
                 .name(name)
                 .build();
 
     }
 
-    private BaekjoonTier getTierFrom(int number) {
-        return null;
+    private LocalDate getSolveDate(BOJ atBoj) {
+        //기본값이면 현재시간
+        if(atBoj.solveDate().year() == -1 || atBoj.solveDate().month() == -1 || atBoj.solveDate().day() == -1){
+            return LocalDate.now();
+        }
+        return LocalDate.of(atBoj.solveDate().year(), atBoj.solveDate().month(), atBoj.solveDate().day());
     }
+
 
     private int getNumberFrom(String className, BOJ atBoj) {
         return (atBoj.number() == BOJ.DEFAULT_NUMBER) ?
@@ -180,16 +193,18 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
                 atBoj.number();
     }
 
+
+
     private int extractNumberFrom(String className) {
         if(!Character.isDigit(className.charAt(className.length()-1))){
-            throw new IllegalStateException("클래스 이름 형식이 잘못되었습니다. 형식 [~~~~문제번호]");
+            throw new IllegalStateException("클래스 이름 형식이 잘못되었습니다. 형식 [~~~~문제번호 | ex) Q1002, 백준1002 등]");
         }
         for(int i = className.length() -1; i >= 0; i--) {
             if (!Character.isDigit(className.charAt(i))) {
                 return Integer.parseInt(className.substring(i+1));
             }
         }
-        throw new IllegalStateException("클래스 이름 형식이 잘못되었습니다. 형식 [~~~~문제번호]");
+        throw new IllegalStateException("클래스 이름 형식이 잘못되었습니다. 형식 [~~~~문제번호 | ex) Q1002, 백준1002 등]");
     }
 
 

@@ -1,10 +1,9 @@
-import annotation.BOJ;
-import annotation.SolveDate;
+import annotation.boj.BOJ;
 import gitrepourlparser.PersonalGitRepositoryUrlParser;
 import readmegenerator.BOJReadmeGenerator;
 
-@BOJ(solveDate = @SolveDate)
-public class 백준1002 {
+@BOJ
+public class Q2012 {
     public static void main(String[] args) {
         //== 개인 리포지토리에 리드미 만드는 코드 ==//
         PersonalGitRepositoryUrlParser parser = new PersonalGitRepositoryUrlParser("ShinDongHun1","BOJ", "main" );

@@ -12,9 +12,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface SolveDate {
 
-    int year() default 0;
-    int month() default 1;
-    int day() default 1;
+    int year() default -1;
+    int month() default -1;
+    int day() default -1;
 
 
 }

@@ -1,4 +1,4 @@
-package annotation;
+package annotation.boj;
 
 
 import java.util.Arrays;
