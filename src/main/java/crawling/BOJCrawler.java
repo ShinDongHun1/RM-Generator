@@ -1,6 +1,6 @@
-package crawling.boj;
+package crawling;
 
-import annotation.boj.BaekjoonTier;
+import annotation.boj.BOJTier;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -41,7 +41,7 @@ public class BOJCrawler {
                 }
             }
 
-            map.put(BaekjoonTier.class, BaekjoonTier.getByPath(imagePath));
+            map.put(BOJTier.class, BOJTier.getByPath(imagePath));
             map.put(String.class, name);
         } catch (Exception e) {
             e.printStackTrace();

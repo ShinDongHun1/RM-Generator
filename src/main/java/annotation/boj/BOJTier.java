@@ -3,7 +3,7 @@ package annotation.boj;
 
 import java.util.Arrays;
 
-public enum BaekjoonTier {
+public enum BOJTier {
 
 
     UNDEFINED(0),
@@ -26,12 +26,12 @@ public enum BaekjoonTier {
 
     private int num;
 
-    BaekjoonTier(int num) {
+    BOJTier(int num) {
         this.num = num;
     }
 
-    public static BaekjoonTier getByPath(String imagePathElem) {
-        return Arrays.stream(BaekjoonTier.values()).filter(tier -> tier.getImagePath().equals(imagePathElem)).findAny().get();
+    public static BOJTier getByPath(String imagePathElem) {
+        return Arrays.stream(BOJTier.values()).filter(tier -> tier.getImagePath().equals(imagePathElem)).findAny().get();
     }
 
     public String getImagePath(){

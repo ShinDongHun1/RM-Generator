@@ -1,36 +1,39 @@
+/*
 package problem;
 
-import annotation.boj.BOJTier;
+import annotation.leetcode.Difficulty;
 
 import java.time.LocalDate;
 
+*/
 /**
  * 문제에 대한 정보
- */
-public class BOJProblem implements Problem, Comparable<BOJProblem>{
+ *//*
 
-    private String problemInfoUrl;      //문제 정보 주소 -> 백준 주소
+public class LeetCodeProblem implements Problem, Comparable<LeetCodeProblem>{
+
+    private String problemInfoUrl;      //문제 정보 주소 -> LeetCode 주소
     private String gitRepoUrl;      //문제 풀이 주소 -> 깃허브 레파지토리 주소
 
     private String name;            //문제 이름
     private int number;             //문제 번호
-    private BOJTier tier;      //문제 레벨
+    private Difficulty difficulty;      //문제 레벨
     private LocalDate solvedDate;   //2022-10-02
 
 
 
-    public BOJProblem(String problemInfoUrl, String gitRepoUrl, String name, int number, BOJTier tier, LocalDate solvedDate) {
+    public LeetCodeProblem(String problemInfoUrl, String gitRepoUrl, String name, int number, Difficulty difficulty, LocalDate solvedDate) {
         this.problemInfoUrl = problemInfoUrl;
         this.gitRepoUrl = gitRepoUrl;
         this.name = name;
         this.number = number;
-        this.tier = tier;
+        this.difficulty = difficulty;
         this.solvedDate = solvedDate;
     }
 
 
     @Override
-    public int compareTo(BOJProblem o) {
+    public int compareTo(LeetCodeProblem o) {
         //오름차순 정렬
         if(solvedDate.isBefore(o.solvedDate)) return -1;
         if(solvedDate.isAfter(o.solvedDate)) return 1;
@@ -59,8 +62,8 @@ public class BOJProblem implements Problem, Comparable<BOJProblem>{
         return number;
     }
 
-    public BOJTier getTier() {
-        return tier;
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
     public LocalDate getSolvedDate() {
@@ -79,7 +82,7 @@ public class BOJProblem implements Problem, Comparable<BOJProblem>{
         private String gitRepoUrl;//문제 주소
         private String name;//문제 이름
         private int number;//문제 번호
-        private BOJTier tier;//문제 레벨
+        private Difficulty difficulty;//문제 레벨
         private LocalDate solvedDate;//2022-10-02
 
         public Builder problemInfoUrl(String problemInfoUrl){
@@ -99,18 +102,19 @@ public class BOJProblem implements Problem, Comparable<BOJProblem>{
             this.number = number;
             return this;
         }
-        public Builder tier(BOJTier tier){
-            this.tier = tier;
+        public Builder difficulty(Difficulty difficulty){
+            this.difficulty = difficulty;
             return this;
         }
         public Builder solvedDate(LocalDate solvedDate){
             this.solvedDate = solvedDate;
             return this;
         }
-        public BOJProblem build() {
-            return new BOJProblem(problemInfoUrl,
-                    gitRepoUrl , name, number,tier, solvedDate);
+        public LeetCodeProblem build() {
+            return new LeetCodeProblem(problemInfoUrl,
+                    gitRepoUrl , name, number,difficulty, solvedDate);
         }
     }
 }
 
+*/

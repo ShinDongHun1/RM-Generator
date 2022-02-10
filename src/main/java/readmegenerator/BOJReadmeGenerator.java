@@ -2,17 +2,14 @@ package readmegenerator;
 
 
 import annotation.boj.BOJ;
-import annotation.boj.BaekjoonTier;
-import crawling.boj.BOJCrawler;
+import annotation.boj.BOJTier;
+import crawling.BOJCrawler;
 import gitrepourlparser.GitRepositoryUrlParser;
 import mapper.ReadmeMapper;
 import problem.BOJProblem;
 import url.URL;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -33,18 +30,19 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
      * |----|---|----|----|---|----|
      *
      */
-    private static final String README = "README.md";
-
-    private static final String TITLE_PREFIX = "## ";// ## 제목 -> 제목 글자 크기 증가
+    private static final Class<BOJ> bojClass = BOJ.class;
+    
     private static final String DEFAULT_TITLE = "백준";//## 뒤에 올 제목 (최상단에 위치)
-
-    private static final String TABLE_HEAD = "|날짜|번호|제목|난이도|풀이|문제 주소|\n" +
-                                              "|----|---|----|----|---|----|\n";
-
 
     private static final URL BOJ_URL = URL.BOJ;
     //== 클래스 변수 지정 종료==//
 
+    private static final String Pattern ="|{0}|" +   //풀이 날짜
+            "{1}|" +//문제 번호, #을 안넣어주면 1000 -> 1,000으로 출력됨
+            "{2}|" +        //문제 이름
+            "<img src=\"{3}\" width=\"20\" height=\"20\" /> {4}|" +//문제 티어의 이미지 + 문제 티어
+            "[풀이]({5})|" +//풀이 주소 (깃허브 주소)
+            "[문제 주소]({6})|";
 
 
     private GitRepositoryUrlParser gitRepositoryUrlParser;
@@ -99,18 +97,11 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
 
             for (BOJProblem problem : bojProblems) {
-                //"|날짜|번호|제목|난이도|풀이|문제 주소|
-                // |----|---|----|----|---|----|\n";
-                bw.write(
-                        MessageFormat.format("|{0}|" +   //풀이 날짜
-                                        "{1,number,#}|" +//문제 번호, #을 안넣어주면 1000 -> 1,000으로 출력됨
-                                        "{2}|" +        //문제 이름
-                                        "<img src=\"{3}\" width=\"20\" height=\"20\" /> {4}|" +//문제 티어의 이미지 + 문제 티어
-                                        "[풀이]({5})|" +//풀이 주소 (깃허브 주소)
-                                        "[문제 주소]({6})|",//문제 주소 (BOJ 주소)
 
+                bw.write(
+                        MessageFormat.format(Pattern,
                                 problem.getSolvedDate(),
-                                problem.getNumber(),
+                                String.valueOf(problem.getNumber()),
                                 problem.getName(),
                                 problem.getTier().getImagePath(),
                                 problem.getTier().name(),
@@ -124,6 +115,8 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
     }
 
 
+
+
     private List<BOJProblem> getNewBOJProblemsExceptFor(List<BOJProblem> existBOJProblems){
 
         List<Integer> existNumbers = existBOJProblems.stream()
@@ -133,7 +126,8 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
 
 
         List<BOJProblem> result = new ArrayList<>();
-        REFLECTIONS.getTypesAnnotatedWith(BOJ.class)
+        
+        REFLECTIONS.getTypesAnnotatedWith(bojClass)
                 .stream()
                 .filter(aClass -> isNewProblem(existNumbers,aClass))
                 .forEach(aClass -> result.add(convertToBOJProblem(aClass)));
@@ -147,21 +141,21 @@ public class BOJReadmeGenerator implements ReadmeGenerator<BOJProblem>{
         //가지고 있지 않음 -> 즉 새로운 문제라면 true
         return !existNumbers.contains(
                 //이름 혹은 어노테이션이 가진 number를 통해 문제번호를 가져옴
-                getNumberFrom(classWithAtBOJ.getSimpleName(), classWithAtBOJ.getDeclaredAnnotation(BOJ.class))
+                getNumberFrom(classWithAtBOJ.getSimpleName(), classWithAtBOJ.getDeclaredAnnotation(bojClass))
         );
     }
 
 
 
     private BOJProblem convertToBOJProblem(Class<?> classWithAtBOJ) {
-        BOJ atBoj = classWithAtBOJ.getDeclaredAnnotation(BOJ.class);
+        BOJ atBoj = classWithAtBOJ.getDeclaredAnnotation(bojClass);
 
 
         //클래스 이름 or 어노테이션에 붙은 number를 통해 문제 번호 가져오기
         int number = getNumberFrom(classWithAtBOJ.getSimpleName(), atBoj);
 
         Map<Class<?>, Object> problemNameAndTier = BOJCrawler.getProblemNameAndTier(number);
-        BaekjoonTier tier = BaekjoonTier.class.cast(problemNameAndTier.get(BaekjoonTier.class));
+        BOJTier tier = BOJTier.class.cast(problemNameAndTier.get(BOJTier.class));
         String name = String.class.cast(problemNameAndTier.get(String.class));
 
         String problemInfoURL = BOJ_URL.getUrl()+number;
